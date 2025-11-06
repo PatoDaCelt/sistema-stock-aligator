@@ -40,27 +40,16 @@ Dependencias instaladas: axios, recharts, react-router-dom.
 sistema-stock-aligator/ # raíz del repo git
 
 ├── inventario/ 
-
 │       ├── manage.py
-
 │       ├── inventario/ # settings, urls, wsgi/asgi
-
 │       ├── productos/
-
 │       ├── clientes/
-
 │       ├── ventas/
-
 │       └── requirements.txt
-
 └── frontend/ 
-
         ├── index.html
-        
         ├── package.json
-        
         ├── tsconfig.json
-        
         └── src/
 
 
