@@ -20,6 +20,7 @@ from rest_framework import routers
 from productos.views import ProductoViewSet, ProveedorViewSet
 from clientes.views import ClienteViewSet
 from ventas.views import VentaViewSet, DetalleVentaViewSet
+from .dashboard_views import dashboard_stats
 
 router = routers.DefaultRouter()
 router.register(r'productos', ProductoViewSet)
@@ -31,4 +32,5 @@ router.register(r'detalles', DetalleVentaViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/dashboard/', dashboard_stats),
 ]

@@ -36,3 +36,27 @@ export interface Venta {
   total: number;
   detalles: DetalleVenta[];
 }
+
+//Models para el Dashboard
+export interface Totales {
+  productos: number;
+  clientes: number;
+  monto_ventas: number;
+  stock_bajo: number;
+}
+
+export interface VentaMes {
+  mes: string;
+  total: number;
+}
+
+export interface CategoriaData {
+  categoria: string;
+  count: number;
+}
+
+export interface DashboardData {
+  totales: Totales;
+  ventas_por_mes: VentaMes[];
+  productos_por_categoria: CategoriaData[];
+}
