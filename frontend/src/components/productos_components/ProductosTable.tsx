@@ -1,0 +1,84 @@
+import { Edit, Trash2 } from "lucide-react";
+import type { Producto } from "../../hooks/useProductos.ts";
+
+interface Props {
+  productos: Producto[];
+  onEdit: (producto: Producto) => void;
+  onDelete: (id: number) => void;
+}
+
+export default function ProductosTable({ productos, onEdit, onDelete }: Props) {
+  return (
+    <div className="overflow-x-auto bg-gray-800 rounded-xl shadow-lg">
+      <table className="min-w-full text-sm text-gray-300">
+        <thead className="bg-gray-700 text-gray-200">
+          <tr>
+            <th className="px-4 py-3 text-left">Nombre</th>
+            <th className="px-4 py-3 text-left">Categoría</th>
+            <th className="px-4 py-3 text-right">Precio</th>
+            <th className="px-4 py-3 text-right">Stock</th>
+            <th className="px-4 py-3 text-right">Stock Mínimo</th>
+            <th className="px-4 py-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {productos.map((p) => {
+            //Identificador para productos en stock bajo
+            const isLowStock = p.stock < p.stock_minimo;
+
+            return (
+              <tr
+                key={p.id}
+                className={`border-b border-gray-700 transition ${
+                  isLowStock
+                    ? "bg-yellow-500/10 hover:bg-yellow-500/20"
+                    : "hover:bg-gray-700/50"
+                }`}
+              >
+                <td className="px-4 py-2">{p.nombre}</td>
+                <td className="px-4 py-2">{p.categoria}</td>
+                <td className="px-4 py-2 text-right">
+                  ${Number(p.precio || 0).toFixed(2)}
+                </td>
+                <td
+                  className={`px-4 py-2 font-semibold text-right ${
+                    isLowStock ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {p.stock}
+                </td>
+                <td className="px-4 py-2 text-right">{p.stock_minimo}</td>
+
+                <td className="px-4 py-2 text-center flex justify-center gap-3">
+                  <button
+                    onClick={() => onEdit(p)}
+                    className="p-2 rounded bg-blue-600 hover:bg-blue-700 text-white transition"
+                    title="Editar producto"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => onDelete(p.id)}
+                    className="p-2 rounded bg-red-600 hover:bg-red-700 text-white transition"
+                    title="Eliminar producto"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+
+          {productos.length === 0 && (
+            <tr>
+              <td colSpan={6} className="text-center py-6 text-gray-400">
+                No hay productos en inventario
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
