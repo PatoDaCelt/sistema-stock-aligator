@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Edit, Trash2 } from "lucide-react";
 import type { Producto } from "../../hooks/useProductos.ts";
+import ConfirmationModal from "./ConfirmationModal.tsx";
 
 interface Props {
   productos: Producto[];
@@ -8,6 +10,30 @@ interface Props {
 }
 
 export default function ProductosTable({ productos, onEdit, onDelete }: Props) {
+  //Estado para guardar el ID del producto a eliminar
+  const [productToDelete, setProductToDelete] = useState<number | null>(null);
+
+  //Se llama al clickear Eliminar
+  const handleDeleteClick = (id: number) => {
+    setProductToDelete(id);
+  };
+
+  //Se llama si se confirma la eliminacion
+  const handleConfirmDelete = () => {
+    if (productToDelete !== null) {
+      onDelete(productToDelete);
+    }
+    setProductToDelete(null);
+  };
+
+  //Cancela y cierra el modal
+  const handleCancelDelete = () => {
+    setProductToDelete(null);
+  };
+
+  //Encuentra el producto y obtiene el nombre
+  const productInfo = productos.find((p) => p.id === productToDelete);
+
   return (
     <div className="overflow-x-auto bg-gray-800 rounded-xl shadow-lg">
       <table className="min-w-full text-sm text-gray-300">
@@ -59,7 +85,7 @@ export default function ProductosTable({ productos, onEdit, onDelete }: Props) {
                     <Edit size={16} />
                   </button>
                   <button
-                    onClick={() => onDelete(p.id)}
+                    onClick={() => handleDeleteClick(p.id)}
                     className="p-2 rounded bg-red-600 hover:bg-red-700 text-white transition"
                     title="Eliminar producto"
                   >
@@ -79,6 +105,15 @@ export default function ProductosTable({ productos, onEdit, onDelete }: Props) {
           )}
         </tbody>
       </table>
+
+      {/* Modal de confirmacion */}
+      {productToDelete !== null && productInfo && (
+        <ConfirmationModal
+          productoNombre={productInfo.nombre}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 }
