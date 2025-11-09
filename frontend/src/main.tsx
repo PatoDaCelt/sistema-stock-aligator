@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
 import Productos from "./pages/Productos.tsx";
 import Clientes from "./pages/Clientes.tsx";
 import Ventas from "./pages/Ventas.tsx";

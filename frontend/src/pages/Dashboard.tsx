@@ -1,7 +1,7 @@
-import DashboardCards from "./dashboard_components/DashboardCards.tsx";
-import SalesChart from "./dashboard_components/SalesChart.tsx";
-import ProductsPie from "./dashboard_components/ProductPie.tsx";
-import useDashboard from "../hooks/useDashboard";
+import DashboardCards from "../components/dashboard_components/DashboardCards.tsx";
+import SalesChart from "../components/dashboard_components/SalesChart.tsx";
+import ProductsPie from "../components/dashboard_components/ProductPie.tsx";
+import useDashboard from "../hooks/useDashboard.ts";
 import loadingBg from "../assets/carrito.svg";
 
 const Dashboard = () => {
