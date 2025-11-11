@@ -30,9 +30,9 @@ const ConfirmationModal = ({
           Confirmar Eliminación
         </h3>
         <p className="text-gray-300 mb-6">
-          ¿Estás seguro de que quieres eliminar el producto:
+          ¿Estás seguro de que quieres eliminar: 
           <span className="font-semibold text-red-400">
-            {" "}
+            {"  "}
             "{productoNombre}"
           </span>
           ? Esta acción <span className="font-bold">no se puede deshacer</span>.
