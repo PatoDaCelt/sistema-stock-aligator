@@ -1,6 +1,5 @@
 import { useState } from "react";
-import useProductos from "../hooks/useProductos.ts";
-import type { Producto } from "../hooks/useProductos.ts";
+import useProductos from "../hooks/useProductos.ts";import type { Producto } from "../types/models.ts";
 import ProductosTable from "../components/productos_components/ProductosTable.tsx";
 import ProductoForm from "../components/productos_components/ProductosForm.tsx";
 import loadingBg from "../assets/carrito.svg";

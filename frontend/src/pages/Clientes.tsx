@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useClientes from "../hooks/useClientes.ts";
-import type { Cliente } from "../hooks/useClientes.ts";
+import type { Cliente } from "../types/models.ts";
 import ClientesTable from "../components/clientes_componentes/ClientesTable.tsx";
 import ClienteModal from "../components/clientes_componentes/ClienteModal.tsx";
 import loadingBg from "../assets/carrito.svg";
@@ -31,7 +31,7 @@ export default function Clientes() {
           }}
         />
         <div className="animate-pulse text-xl font-semibold text-blue-400">
-          Cargando tabla de productos...
+          Cargando tabla de clientes...
         </div>
       </div>
     );
