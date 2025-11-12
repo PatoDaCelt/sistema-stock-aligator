@@ -3,14 +3,45 @@ import useClientes from "../hooks/useClientes.ts";
 import type { Cliente } from "../hooks/useClientes.ts";
 import ClientesTable from "../components/clientes_componentes/ClientesTable.tsx";
 import ClienteModal from "../components/clientes_componentes/ClienteModal.tsx";
+import loadingBg from "../assets/carrito.svg";
 
 export default function Clientes() {
-  const { clientes, loading, error, createCliente, updateCliente, deleteCliente } = useClientes();
+  const {
+    clientes,
+    loading,
+    error,
+    createCliente,
+    updateCliente,
+    deleteCliente,
+  } = useClientes();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCliente, setEditingCliente] = useState<Cliente | null>(null);
 
-  if (loading) return <div className="text-gray-300">Cargando clientes...</div>;
-  if (error) return <div className="text-red-400">{error}</div>;
+  if (loading)
+    return (
+      <div className="relative flex items-center justify-center h-[calc(100vh-4rem)] bg-gray-900 overflow-hidden">
+        <img
+          src={loadingBg}
+          alt="Cargando..."
+          className="absolute w-[60%] max-w-[400px] opacity-20 object-contain select-none"
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+        <div className="animate-pulse text-xl font-semibold text-blue-400">
+          Cargando tabla de productos...
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-4rem)] text-red-400">
+        Error: {error}
+      </div>
+    );
 
   const handleAdd = () => {
     setEditingCliente(null);
@@ -43,7 +74,11 @@ export default function Clientes() {
         </button>
       </div>
 
-      <ClientesTable clientes={clientes} onEdit={handleEdit} onDelete={deleteCliente} />
+      <ClientesTable
+        clientes={clientes}
+        onEdit={handleEdit}
+        onDelete={deleteCliente}
+      />
 
       {modalOpen && (
         <ClienteModal

@@ -7,6 +7,10 @@ class VentaViewSet(viewsets.ModelViewSet):
     queryset = Venta.objects.all().order_by('-fecha')
     serializer_class = VentaSerializer
     
+    def create(self, request, *args, **kwargs):
+        print("Datos recibidos:", request.data)
+        return super().create(request, *args, **kwargs)
+    
 class DetalleVentaViewSet(viewsets.ModelViewSet):
     queryset = DetalleVenta.objects.all()
     serializer_class = DetalleVentaSerializer

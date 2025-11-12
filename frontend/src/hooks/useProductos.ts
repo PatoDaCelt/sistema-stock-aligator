@@ -1,16 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import type { Producto } from "../types/models.ts";
 
 const API_URL = "http://localhost:8000/api/productos/";
-
-export interface Producto {
-  id: number;
-  nombre: string;
-  categoria: string;
-  precio: number; //precio_venta
-  stock: number; //stock_actual
-  stock_minimo: number;
-}
 
 interface ProductoBackend {
   id: number;
@@ -41,7 +33,7 @@ export default function useProductos() {
         stock_minimo: p.stock_minimo,
       }));
       //Datos recibidos del back
-      console.log("DATA Dashboard:", productosAdaptados);
+      console.log("DATA Productos:", productosAdaptados);
       setProductos(productosAdaptados);
       setLoading(false);
     } catch (err) {

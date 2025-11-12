@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-export interface Cliente {
-  id: number;
-  nombre: string;
-  correo: string;
-  telefono?: string;
-  direccion?: string;
-  fecha_registro: string;
-}
+import type { Cliente } from "../types/models.ts";
 
 const API_URL = "http://localhost:8000/api/clientes/";
 
@@ -23,9 +15,11 @@ export default function useClientes() {
 
   async function fetchClientes() {
     try {
-      setLoading(true);
       const res = await axios.get(API_URL);
+      //Datos recibidos del back
+      console.log("DATA Clientes:", res.data);
       setClientes(res.data);
+      setLoading(true);
     } catch {
       setError("Error al cargar los clientes");
     } finally {

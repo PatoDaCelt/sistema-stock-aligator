@@ -8,33 +8,46 @@ export interface Proveedor {
 export interface Producto {
   id: number;
   nombre: string;
-  descripcion?: string;
-  precio_venta: number;
-  stock_actual: number;
-  bajo_stock: boolean;
-  proveedor_nombre?: string;
+  categoria: string;
+  precio: number; //precio_venta
+  stock: number; //stock_actual
+  stock_minimo: number;
 }
 
 export interface Cliente {
   id: number;
   nombre: string;
-  correo?: string;
+  correo: string;
   telefono?: string;
+  direccion?: string;
+  fecha_registro: string;
 }
 
 export interface DetalleVenta {
   id: number;
-  producto_detalle: Producto;
+  producto: string;
   cantidad: number;
+  precio_unitario: number;
   subtotal: number;
+}
+
+export interface DetalleVentaInput {
+  producto: number;
+  cantidad: number;
 }
 
 export interface Venta {
   id: number;
-  cliente_detalle: Cliente;
+  cliente: string;
+  cliente_nombre: string;
   fecha: string;
   total: number;
-  detalles: DetalleVenta[];
+  detalles?: DetalleVenta[];
+}
+
+export interface NuevaVentaData {
+  cliente: number; 
+  detalles: DetalleVentaInput[];
 }
 
 //Models para el Dashboard

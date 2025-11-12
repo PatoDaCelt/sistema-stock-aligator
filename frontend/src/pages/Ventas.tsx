@@ -1,12 +1,25 @@
-import VentasList from "../components/VentasList.tsx";
+import { useState } from "react";
+import useVentas from "../hooks/useVentas";
+import type { Venta } from "../types/models.ts";
+import VentasTable from "../components/ventas_components/VentasTable.tsx";
+import NuevaVentaForm from "../components/ventas_components/NuevaVentaForm";
+import DetalleVentaModal from "../components/ventas_components/DetalleVentaModal.tsx";
 
-const Ventas = () => {
+export default function Ventas() {
+  const { ventas, fetchVentas } = useVentas();
+  const [ventaSeleccionada, setVentaSeleccionada] = useState<Venta | null>(null);
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Gestión de Ventas</h1>
-      <VentasList />
+    <div className="space-y-6 text-gray-200">
+      <NuevaVentaForm onVentaCreada={fetchVentas} />
+      <VentasTable ventas={ventas} onSelect={setVentaSeleccionada} />
+
+      {ventaSeleccionada && (
+        <DetalleVentaModal
+          venta={ventaSeleccionada}
+          onClose={() => setVentaSeleccionada(null)}
+        />
+      )}
     </div>
   );
-};
-
-export default Ventas;
+}
