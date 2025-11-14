@@ -21,6 +21,11 @@ from productos.views import ProductoViewSet, ProveedorViewSet
 from clientes.views import ClienteViewSet
 from ventas.views import VentaViewSet, DetalleVentaViewSet
 from .dashboard_views import dashboard_stats
+from .register_view import RegisterView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.DefaultRouter()
 router.register(r'productos', ProductoViewSet)
@@ -33,4 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/dashboard/', dashboard_stats),
+    path('api/register_view/', RegisterView.as_view(), name='register_view'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

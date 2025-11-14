@@ -45,7 +45,7 @@ export default function VentaDetalleModal({ venta, onClose }: Props) {
             <tbody>
               {venta.detalles?.map((d, idx) => (
                 <tr key={idx} className="border-b border-gray-700/50">
-                  <td className="py-1">{d.producto || "—"}</td>
+                  <td className="py-1">{d.producto_nombre || "—"}</td>
                   <td className="text-center py-1">{d.cantidad}</td>
                   <td className="text-right py-1">
                     ${Number(d.subtotal || 0).toFixed(2)}

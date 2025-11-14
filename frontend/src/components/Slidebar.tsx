@@ -1,5 +1,6 @@
 import { useState } from "react"; // Eliminado useEffect
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth.ts";
 import { motion } from "framer-motion";
 import Logo from "../assets/logoGator.png";
 import {
@@ -8,6 +9,7 @@ import {
   Package,
   Users,
   ShoppingCart,
+  LogOut,
 } from "lucide-react";
 
 const textVariants = {
@@ -30,6 +32,8 @@ const textVariants = {
 const Slidebar = () => {
   const [open, setOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={24} />, path: "/" },
@@ -44,6 +48,12 @@ const Slidebar = () => {
   const hoverBg = "hover:bg-blue-800";
   const primaryText = "text-blue-400";
   const secondaryText = "text-gray-400";
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <motion.div
@@ -65,7 +75,11 @@ const Slidebar = () => {
       </div>
 
       {/* Header */}
-      <div className={`flex flex-col items-center gap-3 mb-8 px-1 ${!open ? 'justify-center' : ''}`}>
+      <div
+        className={`flex flex-col items-center gap-3 mb-8 px-1 ${
+          !open ? "justify-center" : ""
+        }`}
+      >
         {/* Logo siempre visible */}
         <img
           src={Logo}
@@ -120,6 +134,35 @@ const Slidebar = () => {
           </Link>
         ))}
       </nav>
+
+      {/* Boton Cerrar Sesion */}
+      <div className="mt-auto">
+        <button
+          onClick={handleLogout}
+          className={`
+            flex items-center w-full gap-3 px-3 py-2 rounded-md transition 
+            text-red-400 hover:bg-red-800/50 hover:text-white
+            ${!open ? "justify-center" : ""}
+          `}
+        >
+          <div
+            className={`
+                ${!open ? "w-full flex justify-center items-center" : ""} 
+                shrink-0
+              `}
+          >
+            <LogOut size={24} />
+          </div>
+          <span
+            className={`
+              text-sm font-medium transition-opacity duration-300
+              ${!open && "opacity-0 hidden"}
+            `}
+          >
+            Cerrar Sesión
+          </span>
+        </button>
+      </div>
 
       {/* Footer */}
       <div className="mt-auto text-xs text-center border-t border-gray-700 pt-2">

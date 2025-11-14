@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     #'proveedores',
     'clientes',
     'ventas',
+    #JWT
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,9 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

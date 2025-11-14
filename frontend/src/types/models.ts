@@ -26,6 +26,7 @@ export interface Cliente {
 export interface DetalleVenta {
   id: number;
   producto: string;
+  producto_nombre: string;
   cantidad: number;
   precio_unitario: number;
   subtotal: number;
