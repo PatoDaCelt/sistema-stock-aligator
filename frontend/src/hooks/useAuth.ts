@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const TOKEN = "authToken";
+
 export function useAuth() {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("authToken")
-  );
+  const [token, setToken] = useState<string | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
 
   const login = async (username: string, password: string) => {
     const res = await axios.post("http://localhost:8000/api/token/", {
       username,
       password,
     });
-    const token = res.data.access;
-    localStorage.setItem('authToken', token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setToken(res.data.access);
+
+    const accessToken = res.data.access;
+
+    localStorage.setItem(TOKEN, accessToken);
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+    setToken(accessToken);
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem(TOKEN);
+    delete axios.defaults.headers.common["Authorization"];
     setToken(null);
   };
 
@@ -32,14 +38,17 @@ export function useAuth() {
 
   const isAuthenticated = !!token;
 
+  // Carga el token al iniciar la app
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      delete axios.defaults.headers.common["Authorization"];
-    }
-  }, [token]);
+    const savedToken = localStorage.getItem(TOKEN);
 
-  return { token, login, logout, register, isAuthenticated };
+    if (savedToken) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`;
+      setToken(savedToken);
+    }
+
+    setLoadingAuth(false);
+  }, []);
+
+  return { token, login, logout, register, isAuthenticated, loadingAuth };
 }

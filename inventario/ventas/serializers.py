@@ -35,15 +35,15 @@ class VentaSerializer(serializers.ModelSerializer):
                     {"detalles": [f"La cantidad de {producto.nombre} debe ser mayor que 0."]}
                 )
 
-            if producto.stock < cantidad:
+            if producto.stock_actual < cantidad:
                 raise serializers.ValidationError(
-                    {"detalles": [f"Stock insuficiente para {producto.nombre}. Solo hay {producto.stock} disponibles."]}
+                    {"detalles": [f"Stock insuficiente para {producto.nombre}. Solo hay {producto.stock_actual} disponibles."]}
                 )
                 
             precio_unitario = producto.precio_venta
             subtotal = cantidad * precio_unitario
 
-            detalle = DetalleVenta.objects.create(
+            DetalleVenta.objects.create(
                 venta=venta,
                 producto=producto,
                 cantidad=cantidad,
@@ -51,7 +51,7 @@ class VentaSerializer(serializers.ModelSerializer):
                 subtotal=subtotal
             )
             
-            producto.stock -= cantidad
+            producto.stock_actual -= cantidad
             producto.save()
 
             total += subtotal
